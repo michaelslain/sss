@@ -5,6 +5,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+body {
+    filter: invert(100%) hue-rotate(90deg);
+}
+
 html {
     scroll-behavior: smooth;
 }
