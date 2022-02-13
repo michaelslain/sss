@@ -1,0 +1,18 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container > * {
+    margin: 20px;
+}
+
+.heading {
+    color: black;
+    font-size: 60px;
+    letter-spacing: -2px;
+    color: red;
+}

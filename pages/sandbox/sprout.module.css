@@ -1,0 +1,111 @@
+.outerContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerContainer {
+    width: 80vw;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.heading {
+    font-size: 100px;
+    color: #242020;
+    margin-bottom: 20px;
+}
+
+.boxContainer {
+    width: inherit;
+    flex: 1;
+    display: flex;
+    gap: 50px;
+}
+
+.box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.box > * {
+    margin-left: 20px;
+}
+
+.input {
+    flex: 2;
+    background: #f2f2f2;
+}
+
+.output {
+    flex: 1;
+    background: #121212;
+}
+
+.subHeading {
+    margin-top: 20px;
+    color: grey;
+    font-weight: 400;
+}
+
+.editor,
+.editorHighlight {
+    width: calc(100% - 40px);
+    height: 80%;
+    position: absolute;
+    top: 50px;
+    font-size: 20px;
+    line-height: 2em;
+    font-family: 'Space Mono', monospace;
+}
+
+.editorHighlight > * {
+    font-family: monospace;
+}
+
+.editor {
+    background: transparent;
+    z-index: 3;
+    color: transparent;
+    caret-color: violet;
+    opacity: 0.8;
+}
+
+.editorHighlight {
+    z-index: 2;
+    color: black;
+}
+
+.buttonContainer {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 40px;
+}
+
+.runButton,
+.docsButton {
+    cursor: pointer;
+    color: black;
+}
+
+.runButton {
+    font-weight: bold;
+}
+
+.runButton:hover,
+.docsButton:hover {
+    opacity: 0.8;
+}
+
+.outputText {
+    line-height: 2em;
+    color: violet;
+    word-wrap: break-word;
+}

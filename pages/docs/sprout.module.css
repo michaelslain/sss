@@ -1,0 +1,80 @@
+.container {
+    overflow: hidden;
+    display: flex;
+}
+
+.sideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 100vw;
+    background: #f2f2f2;
+}
+
+.title {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-left: 20px;
+}
+
+.tab {
+    padding: 20px;
+    width: calc(inherit - 40px);
+    color: black;
+    transition: 0.1s ease-in-out;
+}
+
+.tab:hover {
+    background: #e8e8e8;
+}
+
+.sideBarPlaceHolder {
+    width: 200px;
+}
+
+.page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 400px;
+    margin-top: 100px;
+}
+
+.heading {
+    font-size: 50px;
+    margin-top: 100px;
+}
+
+.code,
+.c {
+    background: #f2f2f2;
+}
+
+.code {
+    padding: 30px;
+}
+
+.c {
+    padding-left: 5px;
+    padding-right: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.code,
+.code > *,
+.c,
+.c > * {
+    font-family: 'Space Mono', monospace;
+}
+
+.code,
+.text {
+    line-height: 2em;
+    font-size: 18px;
+}
