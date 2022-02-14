@@ -116,8 +116,6 @@ export default function highlighter(rawCode) {
                 .indexOf(Keywords.STRING_KY)
             let tokenValue = ''
 
-            console.log(otherStringKeywordIndex)
-
             if (otherStringKeywordIndex !== -1) {
                 sliceBias =
                     otherStringKeywordIndex + Keywords.STRING_KY.length + 1

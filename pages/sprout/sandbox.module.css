@@ -89,18 +89,12 @@
     gap: 40px;
 }
 
-.runButton,
-.docsButton {
-    cursor: pointer;
-    color: black;
-}
-
 .runButton {
     font-weight: bold;
+    cursor: pointer;
 }
 
-.runButton:hover,
-.docsButton:hover {
+.runButton:hover {
     opacity: 0.8;
 }
 

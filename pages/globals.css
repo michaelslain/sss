@@ -6,8 +6,18 @@
 }
 
 body {
-    filter: invert(100%) hue-rotate(90deg);
-    background: black;
+    overflow-x: hidden;
+}
+
+.dark {
+    z-index: 100;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    backdrop-filter: invert(100%) hue-rotate(180deg);
+    pointer-events: none;
 }
 
 html {

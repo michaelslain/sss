@@ -10,20 +10,15 @@
     display: flex;
     flex-direction: column;
     width: 200px;
-    height: 100vw;
+    height: 100vh;
     background: #f2f2f2;
-}
-
-.title {
-    margin-top: 100px;
-    margin-bottom: 100px;
-    margin-left: 20px;
+    justify-content: center;
 }
 
 .tab {
     padding: 20px;
     width: calc(inherit - 40px);
-    color: black;
+    color: #242020;
     transition: 0.1s ease-in-out;
 }
 
@@ -41,6 +36,12 @@
     flex-direction: column;
     gap: 40px;
     margin: 400px;
+    margin-top: 100px;
+    color: #242020;
+}
+
+.title {
+    font-size: 100px;
     margin-top: 100px;
 }
 

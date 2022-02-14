@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import styles from './sprout.module.css'
-import Link from 'next/link'
+import styles from './sandbox.module.css'
 import interpreter from '../../sprout/interpreter'
 import highlighter from '../../sprout/highlighter'
 
 import NotOnMobile from '../../components/NotOnMobile'
+import Header from '../../components/sprout/Header'
 
-export default function Sprout() {
+export default function Sandbox() {
     const [isMobile, setIsMobile] = useState(null)
     const [editorValue, setEditorValue] = useState('')
     const [outputValue, setOutputValue] = useState('')
@@ -88,58 +88,53 @@ export default function Sprout() {
     if (isMobile) return <NotOnMobile />
 
     return (
-        <div className={styles.outerContainer}>
-            <div className={styles.innerContainer}>
-                <h1 className={styles.heading}>Sprout Sandbox</h1>
-                <div className={styles.boxContainer}>
-                    <div className={[styles.box, styles.input].join(' ')}>
-                        <p className={styles.subHeading}>Input</p>
-                        <textarea
-                            className={styles.editor}
-                            ref={editorRef}
-                            value={editorValue}
-                            onKeyDown={handleTyping}
-                            onChange={updateEditor}
-                            spellCheck="false"
-                            placeholder="Type your code here..."
-                        />
-                        <div className={styles.editorHighlight}>
-                            {highlighter(editorValue)}
-                        </div>
-                        <div className={styles.buttonContainer}>
-                            <div
-                                className={styles.runButton}
-                                onClick={handleRun}
-                            >
-                                Run
+        <>
+            <Header />
+            <div className={styles.outerContainer}>
+                <div className={styles.innerContainer}>
+                    <h1 className={styles.heading}>Sprout Sandbox</h1>
+                    <div className={styles.boxContainer}>
+                        <div className={[styles.box, styles.input].join(' ')}>
+                            <p className={styles.subHeading}>Input</p>
+                            <textarea
+                                className={styles.editor}
+                                ref={editorRef}
+                                value={editorValue}
+                                onKeyDown={handleTyping}
+                                onChange={updateEditor}
+                                spellCheck="false"
+                                placeholder="Type your code here..."
+                            />
+                            <div className={styles.editorHighlight}>
+                                {highlighter(editorValue)}
                             </div>
-
-                            <Link href="/docs/sprout" passHref>
-                                <a target="_blank">
-                                    <div className={styles.docsButton}>
-                                        Docs
-                                    </div>
-                                </a>
-                            </Link>
+                            <div className={styles.buttonContainer}>
+                                <div
+                                    className={styles.runButton}
+                                    onClick={handleRun}
+                                >
+                                    Run
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className={[styles.box, styles.output].join(' ')}>
-                        {' '}
-                        <p className={styles.subHeading}>Output</p>
-                        <div className={styles.outputText}>
-                            {outputValue
-                                .split('\n')
-                                .map((line, i) => (
-                                    <font key={i}>
-                                        {line}
-                                        <br />
-                                    </font>
-                                ))
-                                .slice(1)}
+                        <div className={[styles.box, styles.output].join(' ')}>
+                            {' '}
+                            <p className={styles.subHeading}>Output</p>
+                            <div className={styles.outputText}>
+                                {outputValue
+                                    .split('\n')
+                                    .map((line, i) => (
+                                        <font key={i}>
+                                            {line}
+                                            <br />
+                                        </font>
+                                    ))
+                                    .slice(1)}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
