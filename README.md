@@ -1,8 +1,9 @@
 # Project SSS
 
-### Acronym: School System Sucks
+### Acronym: **S**chool **S**ystem **S**ucks
 
 ### About
+
 Platform to allow people self teach computer science for free, at their own pace, with structured courses, and many other features.
 
 ### Stack
