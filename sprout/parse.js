@@ -44,7 +44,22 @@ class Program {
 
                     break
                 case 'call':
+                    if (tree.arguments) {
+                        tree.arguments.forEach(
+                            argument =>
+                                (this.vars[argument.name] = parseMath(
+                                    argument.value
+                                ))
+                        )
+                    }
+
                     this.parse(this.functions[command.functionName])
+
+                    if (tree.argumens) {
+                        tree.arguments.forEach(
+                            argument => delete this.vars[argument.name]
+                        )
+                    }
                     break
             }
         })

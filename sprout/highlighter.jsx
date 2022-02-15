@@ -126,6 +126,11 @@ export default function highlighter(rawCode) {
                 sliceBias = code.length
             }
 
+            tokenValue = tokenValue.split('').map(char => {
+                if (char === '\n') return <br />
+                return char
+            })
+
             tokens.push(
                 <font style={{ color: 'cornflowerblue' }}>{tokenValue}</font>
             )

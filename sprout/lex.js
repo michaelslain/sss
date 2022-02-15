@@ -62,25 +62,37 @@ export default function lex(tokens = []) {
             }
 
             if (tokens[2] === Keywords.FUNCTION_ARGUMENT_KY) {
-                const argumentsStrings = tokens
-                    .slice(3)
-                    .join('')
-                    .split(Keywords.FUNCTION_ARGUMENT_SEPARATOR_KY)
+                const args = []
 
-                tree.arguments = argumentsStrings.map(argument => {
-                    if (
-                        argument.indexOf(
-                            Keywords.FUNCTION_ARGUMENT_RENAME_KY
-                        ) !== -1
-                    ) {
-                        const [originalVar, newVar] = argument.split(
-                            Keywords.FUNCTION_ARGUMENT_RENAME_KY
-                        )
-                        return { originalVar, newVar }
+                let tokensCopy = tokens.slice(3)
+
+                while (true) {
+                    const separatorKeywordIndex = tokensCopy.indexOf(
+                        Keywords.FUNCTION_ARGUMENT_SEPARATOR_KY
+                    )
+                    if (separatorKeywordIndex === -1) break
+
+                    const argument = tokensCopy.slice(0, separatorKeywordIndex)
+
+                    const renameIndex = Keywords.FUNCTION_ARGUMENT_RENAME_KY
+
+                    if (renameIndex !== -1) {
+                        const value = argument.slice(0, renameIndex)
+                        const name = argument.slice(renameIndex + 1)
+
+                        tokensCopy = tokensCopy.slice(separatorKeywordIndex)
+                        args.push({ value: lexMath(value), name })
                     }
 
-                    return { originvalVar: argument }
-                })
+                    tokensCopy = tokensCopy.slice(2)
+
+                    args.push({
+                        value: lexMath(argument),
+                        name: `var${i}`,
+                    })
+                }
+
+                tree.arguments = args
             }
 
             return [tree, ...lex(tokens.slice(terminationKeywordIndex + 1))]
