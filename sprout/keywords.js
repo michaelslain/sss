@@ -19,7 +19,7 @@ export default {
     ADDITION_OPERATOR: 'plus',
     SUBTRACTION_OPERATOR: 'minus',
     MULTIPLICATION_OPERATOR: 'times',
-    DIVISION_OPERATOR: 'divided by',
+    DIVISION_OPERATOR: 'dividedby',
     IF_DECLARATION_KY: 'if',
     ELSE_DECLARATION_KY: 'otherwiseif',
     PRINT_KY: 'say',

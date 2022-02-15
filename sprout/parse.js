@@ -91,7 +91,7 @@ class Program {
                     case 'multiply':
                         return left * right
                     case 'divide':
-                        return left / right
+                        return Math.round(left / right)
                     case 'equal':
                         return left === right
                     case 'lessthan':
