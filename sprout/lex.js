@@ -2,7 +2,7 @@ import Keywords from './keywords.js'
 import { getOperatorType, operatorValues } from './operators.js'
 import nester from './nester.js'
 
-export default function lex(tokens = []) {
+export default function lex(tokens = [], messenger) {
     if (tokens.length === 0) return []
 
     const token = tokens[0]
@@ -14,11 +14,17 @@ export default function lex(tokens = []) {
             tree = {
                 type: 'declaration',
                 varName: tokens[1],
-                ...lex(tokens.slice(2)),
+                ...lex(tokens.slice(2), messenger),
             }
 
             if (terminationKeywordIndex === 2)
-                return [tree, ...lex(tokens.slice(terminationKeywordIndex + 1))]
+                return [
+                    tree,
+                    ...lex(
+                        tokens.slice(terminationKeywordIndex + 1),
+                        messenger
+                    ),
+                ]
 
             switch (tokens[2]) {
                 case Keywords.ASSIGNMENT_KY:
@@ -31,21 +37,28 @@ export default function lex(tokens = []) {
                     }
                     return [
                         tree,
-                        ...lex(tokens.slice(terminationKeywordIndex + 1)),
+                        ...lex(
+                            tokens.slice(terminationKeywordIndex + 1),
+                            messenger
+                        ),
                     ]
                 case Keywords.FUNCTION_KY:
                     tree = {
                         ...tree,
                         varType: 'function',
-                        content: lex(tokens.slice(3)),
+                        content: lex(tokens.slice(3), messenger),
                     }
 
                     const nextCommandIndex = nester(
                         tokens,
-                        terminationKeywordIndex
+                        terminationKeywordIndex,
+                        messenger
                     )
 
-                    return [tree, ...lex(tokens.slice(nextCommandIndex))]
+                    return [
+                        tree,
+                        ...lex(tokens.slice(nextCommandIndex), messenger),
+                    ]
             }
             break
         case Keywords.PRINT_KY:
@@ -54,7 +67,10 @@ export default function lex(tokens = []) {
                 content: lexMath(tokens.slice(1, terminationKeywordIndex)),
             }
 
-            return [tree, ...lex(tokens.slice(terminationKeywordIndex + 1))]
+            return [
+                tree,
+                ...lex(tokens.slice(terminationKeywordIndex + 1), messenger),
+            ]
         case Keywords.FUNCTION_CALL_KY:
             tree = {
                 type: 'call',
@@ -62,40 +78,50 @@ export default function lex(tokens = []) {
             }
 
             if (tokens[2] === Keywords.FUNCTION_ARGUMENT_KY) {
-                const args = []
+                try {
+                    const args = []
 
-                let tokensCopy = tokens.slice(3)
+                    let tokensCopy = tokens.slice(3)
 
-                while (true) {
-                    const separatorKeywordIndex = tokensCopy.indexOf(
-                        Keywords.FUNCTION_ARGUMENT_SEPARATOR_KY
-                    )
-                    if (separatorKeywordIndex === -1) break
+                    for (let i = 0; 1; i++) {
+                        const separatorKeywordIndex = tokensCopy.indexOf(
+                            Keywords.FUNCTION_ARGUMENT_SEPARATOR_KY
+                        )
+                        if (separatorKeywordIndex === -1) break
 
-                    const argument = tokensCopy.slice(0, separatorKeywordIndex)
+                        const argument = tokensCopy.slice(
+                            0,
+                            separatorKeywordIndex
+                        )
 
-                    const renameIndex = Keywords.FUNCTION_ARGUMENT_RENAME_KY
+                        const renameIndex = Keywords.FUNCTION_ARGUMENT_RENAME_KY
 
-                    if (renameIndex !== -1) {
-                        const value = argument.slice(0, renameIndex)
-                        const name = argument.slice(renameIndex + 1)
+                        if (renameIndex !== -1) {
+                            const value = argument.slice(0, renameIndex)
+                            const name = argument.slice(renameIndex + 1)
 
-                        tokensCopy = tokensCopy.slice(separatorKeywordIndex)
-                        args.push({ value: lexMath(value), name })
+                            tokensCopy = tokensCopy.slice(separatorKeywordIndex)
+                            args.push({ value: lexMath(value), name })
+                        }
+
+                        tokensCopy = tokensCopy.slice(2)
+
+                        args.push({
+                            value: lexMath(argument),
+                            name: `var${i}`,
+                        })
                     }
 
-                    tokensCopy = tokensCopy.slice(2)
-
-                    args.push({
-                        value: lexMath(argument),
-                        name: `var${i}`,
-                    })
+                    tree.arguments = args
+                } catch (err) {
+                    messenger('You are using function arguments incorrectly.')
                 }
-
-                tree.arguments = args
             }
 
-            return [tree, ...lex(tokens.slice(terminationKeywordIndex + 1))]
+            return [
+                tree,
+                ...lex(tokens.slice(terminationKeywordIndex + 1), messenger),
+            ]
         case Keywords.IF_DECLARATION_KY:
         case Keywords.ELSE_DECLARATION_KY:
             const functionKeywordIndex = tokens.indexOf(Keywords.FUNCTION_KY)
@@ -110,16 +136,20 @@ export default function lex(tokens = []) {
             tree = {
                 type,
                 condition: lexMath(conditionTokens),
-                content: lex(ifContentTokens),
+                content: lex(ifContentTokens, messenger),
             }
 
-            const nextCommandIndex = nester(tokens, terminationKeywordIndex)
+            const nextCommandIndex = nester(
+                tokens,
+                terminationKeywordIndex,
+                messenger
+            )
 
-            return [tree, ...lex(tokens.slice(nextCommandIndex))]
+            return [tree, ...lex(tokens.slice(nextCommandIndex), messenger)]
         case Keywords.FUNCTION_TERMINATION_KY:
             return []
         case Keywords.TERMINATION_KY:
-            return lex(tokens.slice(1))
+            return lex(tokens.slice(1), messenger)
     }
 
     return []

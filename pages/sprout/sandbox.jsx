@@ -72,15 +72,22 @@ export default function Sandbox() {
         }
     }
 
-    const handleSetOutputValue = message =>
+    const handleSetOutputValue = message => {
+        if (message == null)
+            message = `You are using a variable that doesn't exist`
+
         setOutputValue(v => `${v}\n${message}`)
+    }
 
     const handleRun = () => {
         setOutputValue(_ => '')
 
         handleSetOutputValue('Running...')
 
-        interpreter(editorValue, handleSetOutputValue)
+        // adds delay to let user know that something is happening
+        setTimeout(() => {
+            interpreter(editorValue, handleSetOutputValue)
+        }, 500)
     }
 
     if (isMobile == null) return <></>
