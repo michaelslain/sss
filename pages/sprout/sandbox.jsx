@@ -13,17 +13,26 @@ export default function Sandbox() {
 
     const editorRef = useRef()
 
+    const handleSaving = async () => localStorage.setItem('editor', editorValue)
+
     useEffect(() => {
         setIsMobile(
             /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
                 navigator.userAgent
             )
         )
+
+        const initialEditorValue = localStorage.getItem('editor')
+        setEditorValue(initialEditorValue)
     }, [setIsMobile])
 
     useEffect(() => {
         if (editorRef.current) editorRef.current.focus()
     }, [editorRef.current])
+
+    useEffect(() => {
+        handleSaving()
+    }, [editorValue, handleSaving])
 
     const updateEditor = e => setEditorValue(e.target.value)
 
