@@ -103,3 +103,13 @@
     color: violet;
     word-wrap: break-word;
 }
+
+@media (max-height: 854px) {
+    .box {
+        height: 70vh;
+    }
+
+    .heading {
+        font-size: 13vh;
+    }
+}
