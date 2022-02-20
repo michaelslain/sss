@@ -1,6 +1,6 @@
 # Project SSS
 
-### Acronym: **S**chool **S**ystem **S**ucks
+### Project <u>S</u>chool <u>S</u>ystem <u>S</u>ucks
 
 ### About
 

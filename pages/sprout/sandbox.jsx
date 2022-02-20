@@ -47,10 +47,10 @@ export default function Sandbox() {
             case 'Tab':
                 e.preventDefault()
 
-                const cursorPosition = e.target.selectionStart
+                const initialCursorPosition = e.target.selectionStart
 
                 let newEditorValue =
-                    editorValue.substring(0, cursorPosition) +
+                    editorValue.substring(0, initialCursorPosition) +
                     tab +
                     editorValue.substring(e.target.selectionEnd)
 
