@@ -108,7 +108,7 @@ export default function Sandbox() {
             <Header />
             <div className={styles.outerContainer}>
                 <div className={styles.innerContainer}>
-                    <h1 className={styles.heading}>Sprout Sandbox</h1>
+                    <h1 className={styles.heading}>BeanSprout Sandbox</h1>
                     <div className={styles.boxContainer}>
                         <div className={[styles.box, styles.input].join(' ')}>
                             <p className={styles.subHeading}>Input</p>
